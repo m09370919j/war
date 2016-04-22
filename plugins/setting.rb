@@ -42,39 +42,41 @@ if  !bd[message.from.id] && !@config["bban"].include?(message.from.id)
 	case message.text
 	when "#signup"
 		if db[message.from.id]
-		    bot.api.send_message(chat_id: message.chat.id, text: "You're Already Registered!" )
-	    else
-		    db[message.from.id] = {"Power"=>150,
-		    	"Defanse"=>100,
-		    	"res"=>600,
-		    	"Gems"=>60,
-		    	"Attacks"=>0,
-		    	"Wins"=>0,
-		    	"Loses"=>0,
-		    	"Defanse_a"=>0,
-		    	"dd_win"=>0,
-		    	"dd_loses"=>0,
-		    	"level"=>1,
-		    	"Shield"=>true,
-		    	"clan"=>"none"
-		    }
-		    bot.api.send_message(chat_id: message.chat.id, text: "You've been Registered!" )
-		    puts "#{message.from.username} HAS BEEN SIGNED UP".on_green
+			bot.api.send_message(chat_id: message.chat.id, text: "You're Already Registered!" )
+		else
+			db[message.from.id] = {"Power"=>150,
+				"Defanse"=>100,
+				"res"=>600,
+				"Gems"=>60,
+				"Attacks"=>0,
+				"Wins"=>0,
+				"Loses"=>0,
+				"Defanse_a"=>0,
+				"dd_win"=>0,
+				"dd_loses"=>0,
+				"level"=>1,
+				"Shield"=>true,
+				"clan"=>"none"
+			}
+			bot.api.send_message(chat_id: message.chat.id, text: "You've been Registered!" )
+			puts "#{message.from.username} HAS BEEN SIGNED UP".on_green
 		end
 	when "#info"
 		if db[message.from.id]
-	    	bot.api.send_message(chat_id: message.chat.id, text: "👾 Player: #{message.from.first_name} #{message.from.last_name}\n🏅 Level: #{db[message.from.id]["level"]}\n💪 Power: #{db[message.from.id]["Power"]}\n🕸 Defense: #{db[message.from.id]["Defanse"]}\n🍎 Resources: #{db[message.from.id]["res"]}\n💎  Gems: #{db[message.from.id]["Gems"]}\n🔰 Shield: #{db[message.from.id]["Shield"]}\n⚔ Number of Attacks: #{db[message.from.id]["Attacks"]}\n👍--Wins: #{db[message.from.id]["Wins"]}\n👎--Losses: #{db[message.from.id]["Loses"]}\n🎯 Number of Defenses: #{db[message.from.id]["Defanse_a"]}\n👍--Wins: #{db[message.from.id]["dd_win"]}\n👎--Losses: #{db[message.from.id]["dd_loses"]}\n " )
-	    else
-		    bot.api.send_message(chat_id: message.chat.id, text: "You're not registered in the game." )
+			bot.api.send_message(chat_id: message.chat.id, text: "👾 Player: #{message.from.first_name} #{message.from.last_name}\n🏅 Level: #{db[message.from.id]["level"]}\n💪 Power: #{db[message.from.id]["Power"]}\n🕸 Defense: #{db[message.from.id]["Defanse"]}\n🍎 Resources: #{db[message.from.id]["res"]}\n💎  Gems: #{db[message.from.id]["Gems"]}\n🔰 Shield: #{db[message.from.id]["Shield"]}\n⚔ Number of Attacks: #{db[message.from.id]["Attacks"]}\n👍--Wins: #{db[message.from.id]["Wins"]}\n👎--Losses: #{db[message.from.id]["Loses"]}\n🎯 Number of Defenses: #{db[message.from.id]["Defanse_a"]}\n👍--Wins: #{db[message.from.id]["dd_win"]}\n👎--Losses: #{db[message.from.id]["dd_loses"]}\n " )
+		else
+			bot.api.send_message(chat_id: message.chat.id, text: "You're not registered in the game." )
 		end
 	when "#shop"
 		bot.api.send_message(chat_id: message.chat.id, text: "💲💲💲Shop💲💲💲\nfor buying send :\nBuy [pow,def,res] [1,2,3]\n》💪 Power Points\n1 -   50💪 for 10💎\n2 - 100💪 for 15💎\n3 - 250💪 for 30💎\n》🕸 Defense Points\n1 -  50 🕸 for 10 💎\n2 - 100🕸 for 15 💎\n3 - 250🕸 for 30 💎\n》🍎 Resources\n1 -   300🍎 for 15💎\n2 -   600🍎 for 25💎\n3 - 1400🍎 for 35💎" )
-	when "#login"
+	end
+
+	if message.text == "#login" && db[message.from.id]
 		db[message.from.id]["Shield"] = false
-		bot.api.send_message(chat_id: message.chat.id, text: "تم الدخول" )
-	when "#logout"
+		bot.api.send_message(chat_id: message.chat.id, text: "Shield was disabled" )
+	elsif message.text == "#logout" && db[message.from.id]
 		db[message.from.id]["Shield"] = true
-		bot.api.send_message(chat_id: message.chat.id, text: "تم الخروج" )
+		bot.api.send_message(chat_id: message.chat.id, text: "Shield has been activated" )
 	end
 
 	if message.text == "info" && db[message.from.id] && message.reply_to_message && db[message.reply_to_message.from.id]
