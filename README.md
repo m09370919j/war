@@ -1,5 +1,5 @@
 
-##TELEWAR | v2.1 | BETA. | ALKHALIDEE | 2016 
+##TELEWAR | v2.2 | ALKHALIDEE | 2016 
 
 Telegram | @Eyeslov
 
